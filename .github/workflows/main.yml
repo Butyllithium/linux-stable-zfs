@@ -2,21 +2,42 @@ name: BUILD
 
 on:
   push:
-    tags: "new version"
+    branches: "*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: archlinux:base-devel
 
     steps:
-      - name: Build Package
-        uses: ouuan/pkgbuild-action@master
-        id: build-package
-        with:
-          path: /PKGBUILD
-      - uses: actions/checkout@v2
-      - uses: ncipollo/release-action@v1
-        with:
-          allowUpdates: true
-          artifacts: "./*/*.zst"
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        pacman -Syu --noconfirm
+        pacman -S --noconfirm git base-devel
+
+    - name: Show PKGBUILD content
+      run: |
+        pwd
+        ls -la
+        cat PKGBUILD
+
+    - name: Build package
+      run: |
+        useradd builder -m
+        chown -R builder:builder .
+        cd "$GITHUB_WORKSPACE"
+        su builder -c 'makepkg -sf --noconfirm --skippgpcheck --skipchecksums'
+
+    - name: List built packages
+      run: |
+        ls -la *.pkg.tar.zst
+
+    - name: Upload package artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: packages
+        path: ./*.pkg.tar.zst
+        retention-days: 90

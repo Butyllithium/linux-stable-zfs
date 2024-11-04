@@ -13,16 +13,6 @@ pkgdesc="Linux Mainline"
 arch=(x86_64)
 url="https://kernel.org/"
 license=(GPL-2.0-only)
-makedepends=(
-  bc
-  pahole
-  cpio
-  python
-  git
-  libelf
-  perl
-  xz
-)
 options=(
   !debug
   !strip

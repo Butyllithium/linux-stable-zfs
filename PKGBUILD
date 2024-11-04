@@ -59,8 +59,8 @@ prepare() {
   diff -u ../config .config || :
 
 	# 编译zfs前面的准备
-  make ${BUILD_FLAGS[*]} CFLAGS="-O2 -march=native" CXXFLAGS="-O2 -march=native -lstdc++" prepare -j$(nproc)
-	make ${BUILD_FLAGS[*]} CFLAGS="-O2 -march=native" CXXFLAGS="-O2 -march=native -lstdc++" modules_prepare -j$(nproc)
+  make ${BUILD_FLAGS[*]} CFLAGS="-O2 -march=native" CXXFLAGS="-O2 -march=native -lstdc++" prepare -j$(nproc + 1)
+	make ${BUILD_FLAGS[*]} CFLAGS="-O2 -march=native" CXXFLAGS="-O2 -march=native -lstdc++" modules_prepare -j$(nproc +1)
 
 	# 添加zfs补丁
 	cd ${srcdir}/"zfs"
@@ -85,7 +85,7 @@ prepare() {
 build() {
   cd $_srcname
   make all
-  make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1
+  make -C tools/bpf/bpftool vmlinux.h feature-clang-bpf-co-re=1 -j$(nproc +1)
 }
 
 _package() {

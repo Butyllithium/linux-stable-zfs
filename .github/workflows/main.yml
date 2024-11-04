@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       run: |
         pacman -Syu --noconfirm
-        pacman -S --noconfirm git base-devel
+        pacman -S --noconfirm git base-devel python cpio pahole bc libelf perl xz
 
     - name: Show PKGBUILD content
       run: |

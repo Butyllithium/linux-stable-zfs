@@ -22,7 +22,7 @@ _src_zfs=zfs-2.3.0-rc2
 source=(
   "$_srcname::https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/snapshot/${_srcname}.tar.gz"
   "git+https://github.com/openzfs/zfs.git#tag=${_src_zfs}"
-  "https://raw.githubusercontent.com/Butyllithium/linux-stable-zfs/refs/heads/main/config?token=GHSAT0AAAAAACZZ7PU2HMDY3PBNPFSBRFHMZZJJLEA"         # the main kernel config file
+  "config"
 )
 
 sha256sums=(

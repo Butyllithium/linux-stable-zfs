@@ -15,14 +15,12 @@ url="https://kernel.org/"
 license=(GPL-2.0-only)
 makedepends=(
   bc
+  pahole
   cpio
-  gettext
+  python
   git
   libelf
-  pahole
   perl
-  python
-  tar
   xz
 )
 options=(

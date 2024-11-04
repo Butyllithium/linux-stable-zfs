@@ -1,0 +1,22 @@
+name: BUILD
+
+on:
+  push:
+    tags: "new version"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build Package
+        uses: ouuan/pkgbuild-action@master
+        id: build-package
+        with:
+          path: /PKGBUILD
+      - uses: actions/checkout@v2
+      - uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}

@@ -7,13 +7,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: archlinux:base-devel
+    
     steps:
     - name: Maximize build space
       uses: easimon/maximize-build-space@master
-      with:
-        root-reserve-mb: 512
-        swap-size-mb: 1024
-        remove-dotnet: 'true'
+
     - name: Checkout
       uses: actions/checkout@v3
 
@@ -21,8 +20,6 @@ jobs:
       run: |
         echo "Free space:"
         df -h
-        
-    container: archlinux:base-devel
     
     - name: Install dependencies
       run: |
